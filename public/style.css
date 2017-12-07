@@ -1,5 +1,12 @@
 html, body {
   margin: 0;
   padding: 0;
-
 }
+
+#canvas {
+  padding: 20px;
+}
+/*
+input {
+  margin:20px;
+}*/
