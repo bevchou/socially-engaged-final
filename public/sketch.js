@@ -1,68 +1,106 @@
 //GLOBAL VARIABLES
 let canvas;
+//dom elements
 let nameInput, msgInput;
 let sendButton;
-let socket;
+let userReq;
+//element selection
+let chatbody;
+//msg attributes
 let urUsername;
 let msgCount = 0;
-let time;
-
+let startTime, currentTime;
+//boolean checks
+let nameSumbitted = false;
+//sockets
+let socket;
 //JSON object
 let convo = {};
 
 
 function setup() {
-  time = millis();
-  canvas = createCanvas(350, 600);
-  canvas.id('canvas');
-  background(0);;
-  noStroke();
-  // input
+  noCanvas();
+  //initialize time
+  startTime = millis();
+  //username input
   nameInput = createInput('');
   nameInput.size(120, 18);
   nameInput.position(370, 500);
   nameInput.changed(updateName);
-  msgInput = createInput('');
-  msgInput.size(200, 70);
-  msgInput.position(25, 640);
-  msgInput.changed(newText);
-  //button
-  sendButton = createButton('send');
-  sendButton.position(300, 650);
+  //text conversation dom
+  chatbody = select('chatbody');
+  //request username
+  userReq = createP('Submit your name to continue.');
+  userReq.class('alert');
+  chatbody.child(userReq);
   // socket io script
-  socket = io.connect("http://localhost:3000");
+  // socket = io.connect("http://localhost:3000");
   // socket.on('mouse', newDrawing);
 }
 
 
 function updateName() {
   urUsername = nameInput.value();
-  nameInput.hide();
+  nameSumbitted = true;
+  nameInput.remove();
+  userReq.remove();
+  //create msg input
+  msgInput = createElement('textarea', '')
+  msgInput.id('msgInput');
+  msgInput.changed(newText);
+  //create msg send button
+  sendButton = createButton('send');
+  sendButton.mouseClicked(newText);
+  sendButton.id('sendButton');
+  sendButton.position(300, 650);
+
 }
 
 function newText() {
-  let message = msgInput.value();
-  let newMsgData = {
-    time: millis(),
-    msg: message,
-    length: message.length,
-    user: urUsername
+  if (trim(msgInput.value()) != "") {
+    let message = msgInput.value();
+    let newMsgData = {
+      time: millis(),
+      msg: message,
+      length: message.length,
+      user: urUsername
+    }
+    convo[msgCount] = newMsgData;
+    let posttext = convo[msgCount].user + ": " + convo[msgCount].msg;
+    let p = createP(posttext);
+    chatbody.child(p);
+    console.log(convo);
+    msgCount++;
+    cleartext();
   }
-  convo[msgCount] = newMsgData;
-  console.log(convo);
-  msgCount++;
   return false;
 }
 
-//Should I just make everything dom elements? lol whatver
+function keyPressed() {
+  if(keyCode == ENTER && nameSumbitted == true){
+    newText();
+    return false;
+  }
+}
+
+
+function cleartext() {
+  msgInput.remove();
+  msgInput = createElement('textarea', '')
+  msgInput.id('msgInput');
+  msgInput.changed(newText);
+}
 
 function draw() {
-  rect(0, 0, width, height);
-  stroke(0);
-  noFill();
-  strokeWeight(2);
+  clear();
+  if (!nameSumbitted) {
+    text('Submit your name to continue.', windowWidth/2 - 100, 400, 200, 20);
+  } else {
 
+  }
 }
+
+
 
 // function newDrawing(data) {
 //   fill(0, 0, 255);

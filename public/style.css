@@ -1,12 +1,53 @@
 html, body {
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 
 #canvas {
   padding: 20px;
 }
-/*
+
+chatbody {
+  position: absolute;
+  left: 50%;
+  margin-left: -175px;
+  top: 100px;
+  background-color: #d3e4ff;
+  width: 350px;
+  height: 600px;
+}
+
+#msgInput {
+  position: absolute;
+  left: 50%;
+  margin-left: -175px;
+  top: 710px;
+  word-break: break-word;
+  width: 200px;
+  height: 100px;
+}
+
 input {
-  margin:20px;
-}*/
+  border-radius: 2px;
+  padding-left: 0;
+  padding-top: 0;
+  padding-bottom: 0.4em;
+  padding-right: 0.4em;
+}
+
+input[type=text]:focus {
+  border: 1px solid blue;
+}
+
+chatbody p {
+  text-align: left;
+  color: black;
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
+chatbody .alert {
+  color: red;
+}
