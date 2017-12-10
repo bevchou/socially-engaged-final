@@ -16,5 +16,17 @@
     "msg": "now it's a few seconds later",
     "length": 28,
     "user": "bev2"
+  },
+  "3": {
+    "time": 1512875064.382,
+    "msg": "hello",
+    "length": 5,
+    "user": "bev"
+  },
+  "4": {
+    "time": 1512875084.884,
+    "msg": "hi",
+    "length": 2,
+    "user": "bev"
   }
 }

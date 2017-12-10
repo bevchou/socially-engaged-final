@@ -8,10 +8,10 @@ let fs = require('fs');
 
 //load in conversation data
 let convo, data;
-let exists = fs.existsSync('convo.json');
+let exists = fs.existsSync('public/convo.json');
 if (exists) {
   console.log('loading conversation');
-  data = fs.readFileSync('convo.json');
+  data = fs.readFileSync('public/convo.json');
   convo = JSON.parse(data);
 } else {
   console.log('no conversation available');
@@ -37,7 +37,7 @@ function newConnection(socket) {
     convo[count] = data;
     //write to json file
     let json = JSON.stringify(convo, null, 2);
-    fs.writeFile('convo.json', json, finished);
+    fs.writeFile('public/convo.json', json, finished);
     function finished(err) {
       console.log('it worked');
     }
