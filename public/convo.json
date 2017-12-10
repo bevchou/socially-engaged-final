@@ -6,81 +6,105 @@
     "user": "username"
   },
   "1": {
-    "time": 1512894352.275,
+    "time": 1512895824.295,
     "msg": "hi",
     "length": 2,
     "user": "bev"
   },
   "2": {
-    "time": 1512894364.262,
-    "msg": "what is up",
-    "length": 10,
+    "time": 1512895825.712,
+    "msg": "hi",
+    "length": 2,
     "user": "bev"
   },
   "3": {
-    "time": 1512894388.42,
-    "msg": "hello",
-    "length": 5,
-    "user": "bev"
-  },
-  "4": {
-    "time": 1512894520.622,
-    "msg": "yo",
-    "length": 2,
-    "user": "bev"
-  },
-  "5": {
-    "time": 1512895326.452,
-    "msg": "hu",
-    "length": 2,
-    "user": "b"
-  },
-  "6": {
-    "time": 1512895328.42,
-    "msg": "f",
-    "length": 1,
-    "user": "b"
-  },
-  "7": {
-    "time": 1512895330.148,
-    "msg": "f",
-    "length": 1,
-    "user": "b"
-  },
-  "8": {
-    "time": 1512895362.232,
-    "msg": "h",
-    "length": 1,
-    "user": "b"
-  },
-  "9": {
-    "time": 1512895376.347,
-    "msg": "f",
-    "length": 1,
-    "user": "b"
-  },
-  "10": {
-    "time": 1512895377.579,
-    "msg": "f",
-    "length": 1,
-    "user": "b"
-  },
-  "11": {
-    "time": 1512895469.96,
+    "time": 1512895827.903,
     "msg": "lol",
     "length": 3,
     "user": "bev"
   },
+  "4": {
+    "time": 1512895830.478,
+    "msg": "this works",
+    "length": 10,
+    "user": "bev"
+  },
+  "5": {
+    "time": 1512895836.158,
+    "msg": "ok",
+    "length": 2,
+    "user": "bev"
+  },
+  "6": {
+    "time": 1512895843.033,
+    "msg": "I am waiting",
+    "length": 12,
+    "user": "bev"
+  },
+  "7": {
+    "time": 1512895850.952,
+    "msg": "how patient are you",
+    "length": 19,
+    "user": "bev"
+  },
+  "8": {
+    "time": 1512895864.661,
+    "msg": "shoutout to my exes",
+    "length": 19,
+    "user": "bev"
+  },
+  "9": {
+    "time": 1512895882.68,
+    "msg": "I know I'm bad at texting",
+    "length": 25,
+    "user": "bev"
+  },
+  "10": {
+    "time": 1512895904.9,
+    "msg": "the wait time will approach infinity",
+    "length": 36,
+    "user": "bev"
+  },
+  "11": {
+    "time": 1512895932.652,
+    "msg": "who can play it the coolest",
+    "length": 27,
+    "user": "bev"
+  },
   "12": {
-    "time": 1512895564.201,
-    "msg": "i did now",
-    "length": 9,
+    "time": 1512895995.168,
+    "msg": "heyyyyyyyy",
+    "length": 10,
     "user": "bev"
   },
   "13": {
-    "time": 1512895724.315,
-    "msg": "waiting",
-    "length": 7,
+    "time": 1512896060.383,
+    "msg": "test test test",
+    "length": 14,
     "user": "bev"
+  },
+  "14": {
+    "time": 1512896136.288,
+    "msg": "lol",
+    "length": 3,
+    "user": "bev"
+  },
+  "15": {
+    "time": 1512896517.675,
+    "msg": "dating in this day and age is a nightmare",
+    "length": 41,
+    "user": "bev"
+  },
+  "16": {
+    "time": 1512896969.038,
+    "msg": "impatient baby",
+    "length": 14,
+    "user": "WOHO"
+  },
+  "17": {
+    "time": 1512897422.177,
+    "msg": "working",
+    "length": 7,
+    "user": "bev2.0"
   }
 }

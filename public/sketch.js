@@ -71,6 +71,7 @@ function newText() {
       length: message.length,
       user: urUsername
     }
+    //check reply time interval
     timeCheck(newMsgData);
     if (timeLonger) {
       //emit to other viewers
@@ -128,15 +129,19 @@ let timeLonger = false;
 //if wait time is longer than previous
 function timeCheck(newMessage) {
   messagecount = Object.keys(newinfo).length;
-
+  //if there are less than 2 messages (the first message at index 0 is a test entry)
+  //than allow users to send message
   if (messagecount < 3) {
     timeLonger = true;
   } else {
+    //otherwise check if new message interval is longer
     lastInterval = newinfo[messagecount - 1].time - newinfo[messagecount - 2].time;
     newInterval = newMessage.time - newinfo[messagecount - 1].time;
     if (newInterval > lastInterval) {
+      //if so allow user to send
       timeLonger = true;
     } else if (newInterval < lastInterval) {
+      //if not tell user the wait time & don't allow to send
       let timeleft = lastInterval - newInterval;
       let timewarning = createP('wait ' + convertTime(timeleft) + ' before sending a message.');
       chatbody.child(timewarning);
@@ -145,11 +150,13 @@ function timeCheck(newMessage) {
   }
 }
 
+//convert to date & time
 function convertDate(epochdate) {
   let myDate = new Date(epochdate * 1000);
   return myDate.toLocaleString();
 }
 
+//convert seconds to appropriate time metric
 function convertTime(seconds) {
   let words;
   if (seconds < 60) {
@@ -167,7 +174,7 @@ function convertTime(seconds) {
   return words;
 }
 
-//rounds to second decimal place
+//round to second decimal place
 function roundplace(number){
   return round(100*number)/100;
 }
