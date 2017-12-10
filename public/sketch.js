@@ -11,13 +11,17 @@ let urUsername;
 let msgCount = 0;
 //boolean checks
 let nameSumbitted = false;
+let timeLonger = false;
+let lastInterval, newInterval;
+let msgLonger = false;
+let lastLength, newLength;
 //sockets
 let socket;
-//array of last 3 objects
-let convo = {};
 //data for loading past conversation
 let newinfo;
-
+let messagecount;
+//info for incoming messages
+let newMsgData;
 
 function setup() {
   noCanvas();
@@ -28,37 +32,20 @@ function setup() {
   nameInput.changed(updateName);
   //text conversation dom
   chatbody = select('chatbody');
-  //load initial JSONObject
-  loadJSON('convo.json', getOldConvo);
   //request username
   userReq = createP('Submit your name to continue.');
   userReq.id('namealert');
+  //load initial JSONObject
+  loadJSON('convo.json', getOldConvo);
   // socket io script
   socket = io.connect("http://localhost:8000");
   //get broadcasted text & post to browser
   socket.on('chatmsg', function(data) {
-    let posttext = data.user + ": " + data.msg;
+    let posttext = data.user + " (" + convertDate(data.time) + "): " + data.msg
     let p = createP(posttext);
     chatbody.child(p);
   });
 }
-
-function updateName() {
-  urUsername = nameInput.value();
-  nameSumbitted = true;
-  nameInput.remove();
-  userReq.remove();
-  //create msg input
-  msgInput = createElement('textarea', '')
-  msgInput.id('msgInput');
-  msgInput.changed(newText);
-  //create msg send button
-  sendButton = createButton('send');
-  sendButton.mouseClicked(newText);
-  sendButton.id('sendButton');
-}
-
-let newMsgData;
 
 function newText() {
   if (trim(msgInput.value()) != "") {
@@ -73,17 +60,16 @@ function newText() {
     }
     //check reply time interval
     timeCheck(newMsgData);
-    if (timeLonger) {
+    //check length
+    lengthCheck(newMsgData);
+    if (timeLonger && msgLonger) {
       //emit to other viewers
       socket.emit('chatmsg', newMsgData);
-      //add to convo json object
-      convo[msgCount] = newMsgData;
       //post to chat
-      let posttext = convo[msgCount].user + " (" + convertDate(convo[msgCount].time) + "): " + convo[msgCount].msg;
+      let posttext = newMsgData.user + " (" + convertDate(newMsgData.time) + "): " + newMsgData.msg;
       let p = createP(posttext);
       chatbody.child(p);
-      console.log(convo);
-      msgCount++;
+      // msgCount++;
       cleartext();
     }
   }
@@ -92,40 +78,28 @@ function newText() {
 
 function updateJSON(data) {
   newinfo = data;
+  messagecount = Object.keys(newinfo).length;
+  lastInterval = newinfo[messagecount - 1].time - newinfo[messagecount - 2].time;
+  lastLength = newinfo[messagecount -1].length;
   console.log('json file loaded');
 }
 
 function getOldConvo(data) {
   //pass data to newinfo
   newinfo = data;
+  messagecount = Object.keys(newinfo).length;
   //show all old messages
-  for (let i = 1; i < Object.keys(newinfo).length; i++) {
+  for (let i = 1; i < messagecount; i++) {
     let posttext = newinfo[i].user + " (" + convertDate(newinfo[i].time) + "): " + newinfo[i].msg;
     let p = createP(posttext);
     chatbody.child(p);
   }
+  //calculate necessary info
+  lastInterval = newinfo[messagecount - 1].time - newinfo[messagecount - 2].time;
+  lastLength = newinfo[messagecount -1].length;
 }
 
-//enter key will trigger send
-function keyPressed() {
-  if (keyCode == ENTER && nameSumbitted == true) {
-    newText();
-    return false;
-  }
-}
 
-//clear text/make new text area after sending text
-function cleartext() {
-  msgInput.remove();
-  msgInput = createElement('textarea', '')
-  msgInput.id('msgInput');
-  msgInput.changed(newText);
-}
-
-let messagecount;
-let lastInterval;
-let newInterval;
-let timeLonger = false;
 //if wait time is longer than previous
 function timeCheck(newMessage) {
   messagecount = Object.keys(newinfo).length;
@@ -135,46 +109,36 @@ function timeCheck(newMessage) {
     timeLonger = true;
   } else {
     //otherwise check if new message interval is longer
-    lastInterval = newinfo[messagecount - 1].time - newinfo[messagecount - 2].time;
     newInterval = newMessage.time - newinfo[messagecount - 1].time;
-    if (newInterval > lastInterval) {
+    if (newInterval >= lastInterval) {
       //if so allow user to send
       timeLonger = true;
     } else if (newInterval < lastInterval) {
       //if not tell user the wait time & don't allow to send
       let timeleft = lastInterval - newInterval;
-      let timewarning = createP('wait ' + convertTime(timeleft) + ' before sending a message.');
+      let timewarning = createP('wait ' + convertTime(timeleft) + ' before sending a message');
+      timewarning.class('warning');
       chatbody.child(timewarning);
       timeLonger = false;
     }
   }
 }
 
-//convert to date & time
-function convertDate(epochdate) {
-  let myDate = new Date(epochdate * 1000);
-  return myDate.toLocaleString();
-}
-
-//convert seconds to appropriate time metric
-function convertTime(seconds) {
-  let words;
-  if (seconds < 60) {
-    words = roundplace(seconds) + " seconds";
-  } else if (seconds >= 60 && seconds < 60 * 60) {
-    let minutes = seconds / 60;
-    words = roundplace(minutes) + " minutes";
-  } else if (seconds >= 60 * 60 && seconds < 60 * 60 * 24) {
-    let hours = seconds / 1200;
-    words = roundplace(hours) + " hours";
+//check message is longer than previous
+function lengthCheck(newMessage) {
+  messagecount = Object.keys(newinfo).length;
+  if (messagecount < 3){
+    msgLonger = true;
   } else {
-    let days = seconds / (1200 * 24);
-    words = roundplace(days) + " days";
+    newLength = newMessage.length;
+    if (newLength >= lastLength){
+      msgLonger = true;
+    } else if (newLength < lastLength){
+      let charNeeded = lastLength - newLength;
+      let lengthWarning = createP('your message needs ' + charNeeded + ' more characters');
+      lengthWarning.class('warning');
+      chatbody.child(lengthWarning);
+      msgLonger = false;
+    }
   }
-  return words;
-}
-
-//round to second decimal place
-function roundplace(number){
-  return round(100*number)/100;
 }

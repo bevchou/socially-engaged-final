@@ -4,10 +4,6 @@ html, body {
   text-align: center;
 }
 
-#canvas {
-  padding: 20px;
-}
-
 chatbody {
   position: absolute;
   left: 50%;
@@ -16,6 +12,7 @@ chatbody {
   background-color: #d3e4ff;
   width: 350px;
   height: 600px;
+  overflow: scroll;
 }
 
 #msgInput {
@@ -72,4 +69,8 @@ chatbody p {
 #nameInput {
   position: relative;
   top: 720px;
+}
+
+.warning {
+  color: red;
 }
