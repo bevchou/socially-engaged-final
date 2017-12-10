@@ -1,3 +1,4 @@
+
 //GLOBAL VARIABLES
 let canvas;
 //dom elements
@@ -31,8 +32,13 @@ function setup() {
   userReq = createP('Submit your name to continue.');
   userReq.id('namealert');
   // socket io script
-  // socket = io.connect("http://localhost:8000");
-  // socket.on('msg', newText);
+  socket = io.connect("http://localhost:8000");
+  //get broadcasted text & post to browser
+  socket.on('chatmsg', function(data){
+    let posttext = data.user + ": " + data.msg;
+    let p = createP(posttext);
+    chatbody.child(p);
+  });
 }
 
 function updateName() {
@@ -55,13 +61,17 @@ function newText() {
     let message = msgInput.value();
     //create object of msg data
     let newMsgData = {
-      time: millis(),
+      time: new Date().getTime()/1000,
       msg: message,
       length: message.length,
       user: urUsername
     }
-    //add to convo json file
+    //emit to other viewers
+    socket.emit('chatmsg', newMsgData);
+    //add to convo json object
     convo[msgCount] = newMsgData;
+
+    //get JSON from server
     //post to chat
     let posttext = convo[msgCount].user + ": " + convo[msgCount].msg;
     let p = createP(posttext);
