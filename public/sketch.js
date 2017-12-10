@@ -9,7 +9,6 @@ let chatbody;
 //msg attributes
 let urUsername;
 let msgCount = 0;
-let startTime, currentTime;
 //boolean checks
 let nameSumbitted = false;
 //sockets
@@ -20,24 +19,21 @@ let convo = {};
 
 function setup() {
   noCanvas();
-  //initialize time
-  startTime = millis();
   //username input
   nameInput = createInput('');
+  nameInput.id('nameInput');
   nameInput.size(120, 18);
-  nameInput.position(370, 500);
+  // nameInput.position(370, 500);
   nameInput.changed(updateName);
   //text conversation dom
   chatbody = select('chatbody');
   //request username
   userReq = createP('Submit your name to continue.');
-  userReq.class('alert');
-  chatbody.child(userReq);
+  userReq.id('namealert');
   // socket io script
-  // socket = io.connect("http://localhost:3000");
-  // socket.on('mouse', newDrawing);
+  // socket = io.connect("http://localhost:8000");
+  // socket.on('msg', newText);
 }
-
 
 function updateName() {
   urUsername = nameInput.value();
@@ -52,20 +48,21 @@ function updateName() {
   sendButton = createButton('send');
   sendButton.mouseClicked(newText);
   sendButton.id('sendButton');
-  sendButton.position(300, 650);
-
 }
 
 function newText() {
   if (trim(msgInput.value()) != "") {
     let message = msgInput.value();
+    //create object of msg data
     let newMsgData = {
       time: millis(),
       msg: message,
       length: message.length,
       user: urUsername
     }
+    //add to convo json file
     convo[msgCount] = newMsgData;
+    //post to chat
     let posttext = convo[msgCount].user + ": " + convo[msgCount].msg;
     let p = createP(posttext);
     chatbody.child(p);
@@ -77,12 +74,11 @@ function newText() {
 }
 
 function keyPressed() {
-  if(keyCode == ENTER && nameSumbitted == true){
+  if (keyCode == ENTER && nameSumbitted == true) {
     newText();
     return false;
   }
 }
-
 
 function cleartext() {
   msgInput.remove();
@@ -91,13 +87,13 @@ function cleartext() {
   msgInput.changed(newText);
 }
 
-function draw() {
-  clear();
-  if (!nameSumbitted) {
-    text('Submit your name to continue.', windowWidth/2 - 100, 400, 200, 20);
-  } else {
+function timeCheck() {
+  // if (Object.keys(convo).length )
+}
 
-  }
+function draw() {
+  // console.log(Object.keys(convo).length);
+
 }
 
 

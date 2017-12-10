@@ -1,24 +1,29 @@
+//set up express
 let express = require("express");
 let app = express();
-let server = app.listen(3000);
+let server = app.listen(8000);
 
+//file system & cross origin resources (cors)
+let fs = require('fs');
+let cors = require('cors');
+app.use(cors());
+
+//hosting files
 app.use(express.static("public"));
 
-console.log("bev's socket server is running!");
-
-let socket = require("socket.io");
-let io = socket(server);
-io.sockets.on("connection", newConnection);
 
 
+// let socket = require("socket.io");
+// let io = socket(server);
+// io.sockets.on("connection", newConnection);
 
-function newConnection(socket) {
-  console.log("new connection: " + socket.id);
-  socket.on('mouse', function(data) {
-    socket.broadcast.emit('mouse', data);
-    console.log(data);
-  });
-}
+// function newConnection(socket) {
+//   console.log("new connection: " + socket.id);
+//   socket.on('chatmsg', function(msg) {
+//     socket.broadcast.emit('chatmsg', data);
+//
+//   });
+// }
 
 
 // let app = require('express')();
