@@ -12,7 +12,7 @@ chatbody {
   background-color: #d3e4ff;
   width: 350px;
   height: 600px;
-  overflow: scroll;
+  overflow-y: scroll;
 }
 
 #msgInput {
@@ -54,7 +54,8 @@ chatbody p {
   text-align: left;
   color: black;
   position: relative;
-  padding: 0;
+  width: 350px;
+  padding: 2px;
   margin: 0;
 }
 

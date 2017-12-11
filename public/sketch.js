@@ -99,7 +99,7 @@ function getOldConvo(data) {
   lastLength = newinfo[messagecount -1].length;
 }
 
-
+let timeleft
 //if wait time is longer than previous
 function timeCheck(newMessage) {
   messagecount = Object.keys(newinfo).length;
@@ -115,7 +115,7 @@ function timeCheck(newMessage) {
       timeLonger = true;
     } else if (newInterval < lastInterval) {
       //if not tell user the wait time & don't allow to send
-      let timeleft = lastInterval - newInterval;
+      timeleft = lastInterval - newInterval;
       let timewarning = createP('wait ' + convertTime(timeleft) + ' before sending a message');
       timewarning.class('warning');
       chatbody.child(timewarning);
