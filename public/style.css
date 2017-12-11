@@ -2,24 +2,67 @@ html, body {
   margin: 0;
   padding: 0;
   text-align: center;
+  font-family: 'Inconsolata', monospace;
+  color: #282828;
 }
 
 chatbody {
   position: absolute;
   left: 50%;
-  margin-left: -175px;
+  margin-left: -250px;
   top: 80px;
-  background-color: #d3e4ff;
-  width: 350px;
-  height: 600px;
-  overflow-y: scroll;
+  background-color: #e8dce5;
+  width: 500px;
+  height: 400px;
+  overflow: scroll;
+}
+
+chatbody p {
+  text-align: left;
+  color: black;
+  position: relative;
+  max-width: 500px;
+  overflow-wrap: break-word;
+  padding: 2px 5px 5px 2px;
+  margin: 0;
+}
+
+.warning {
+  /*color: #a83217;*/
+  color: #cc3918;
+  padding: 0px;
+}
+
+input {
+  border: 1px solid black;
+  border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+}
+
+input[type=text]:focus {
+  border: 1px solid blue;
+}
+
+#namealert {
+  /*color: #a83217;*/
+  color: #cc3918;
+  position: relative;
+  top: 400px;
+  padding: 0;
+  margin: 0;
+}
+
+#nameInput {
+  position: relative;
+  top: 450px;
 }
 
 #msgInput {
   position: absolute;
   left: 50%;
   margin-left: -175px;
-  top: 690px;
+  top: 500px;
   width: 250px;
   height: 100px;
   -webkit-border-radius: 4px;
@@ -30,7 +73,7 @@ chatbody {
 
 #sendButton {
   position: absolute;
-  top: 725px;
+  top: 535px;
   left: 50%;
   width: 70px;
   height: 30px;
@@ -40,38 +83,14 @@ chatbody {
   border-radius: 4px;
 }
 
-input {
-  border-radius: 2px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
+::-webkit-scrollbar {
+  -webkit-appearance: none;
+  width: 7px;
+  height: 0px;
 }
 
-input[type=text]:focus {
-  border: 1px solid blue;
-}
-
-chatbody p {
-  text-align: left;
-  color: black;
-  position: relative;
-  width: 350px;
-  padding: 2px;
-  margin: 0;
-}
-
-#namealert {
-  color: red;
-  position: relative;
-  top: 670px;
-  padding: 0;
-  margin: 0;
-}
-
-#nameInput {
-  position: relative;
-  top: 720px;
-}
-
-.warning {
-  color: red;
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, .5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
 }
