@@ -1,4 +1,4 @@
-# socially-engaged-final
+# Slow Chat
 Project for NYU ITP's Socially Engaged Art and Digital Practice class
 
 ## View the final site
